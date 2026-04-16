@@ -1,0 +1,334 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Timeline from '../components/Timeline.astro';
+// Moví el contenido del Header aquí para poder manipularlo con JS fácilmente
+---
+
+<Layout title="Playwright Trace Viewer - Sebastian Alatorre">
+    <div class="flex h-screen w-full flex-col">
+        <header id="top-header" class="h-10 border-b border-zinc-800 flex items-center px-3 justify-between bg-[#1a1a1a] shrink-0 transition-colors duration-300">
+            <div class="flex gap-3 items-center">
+                <span id="status-dot" class="text-[#45ad62] font-bold text-[11px]">● PASS</span>
+                <span id="test-name" class="font-medium text-zinc-100">test: hire-sebastian-alatorre.spec.ts:42</span>
+            </div>
+            <div class="flex items-center gap-2 text-zinc-500 text-[11px]">
+                <span>Duration: 8.2s</span>
+                <span class="px-1.5 py-0.5 border border-zinc-700 rounded bg-zinc-800 text-zinc-300">chromium</span>
+            </div>
+        </header>
+
+        <Timeline />
+
+        <main class="flex flex-col lg:flex-row flex-1 overflow-hidden lg:overflow-hidden overflow-y-auto">
+            
+            <aside role="navigation" aria-label="Test Steps" class="lg:w-80 border-r border-zinc-800 bg-[#161616] lg:overflow-y-auto shrink-0 flex lg:flex-col flex-row overflow-x-auto lg:overflow-x-hidden whitespace-nowrap lg:whitespace-normal">
+                <div class="flex border-b border-zinc-800">
+                    <button class="flex-1 px-4 py-2 border-b-2 border-b-blue-500 text-white font-bold text-center">Actions</button>
+                    <span class="flex-1 px-4 py-2 text-zinc-600 text-center cursor-default select-none">Metadata</span>
+                </div>
+                
+                <nav class="flex flex-col text-[13px]">
+                    <div class="p-2 text-zinc-400 uppercase text-[10px] font-bold">Steps</div>
+                    
+                    <button id="btn-intro" class="action-btn active-btn">
+                        <span class="time-label">45ms</span>
+                        <span class="text-blue-400">page.goto</span> <span class="text-zinc-400">/profile</span>
+                    </button>
+                    
+                    <button id="btn-exp" class="action-btn">
+                        <span class="time-label">1.2s</span>
+                        <span class="text-[#45ad62]">click</span> <span class="text-zinc-400 font-semibold"> locator('#experience') </span>
+                    </button>
+
+                    <button id="btn-skills" class="action-btn">
+                        <span class="time-label">1.8s</span>
+                        <span class="text-[#45ad62]">hover</span> <span class="text-zinc-400 font-semibold"> locator('.tech-stack') </span>
+                    </button>
+
+                    <button id="btn-edu" class="action-btn">
+                        <span class="time-label">2.4s</span>
+                        <span class="text-yellow-500">scroll</span> <span class="text-zinc-400 font-semibold"> locator('#education') </span>
+                    </button>
+
+                    <button id="btn-projects" class="action-btn">
+                        <span class="time-label">2.9s</span>
+                        <span class="text-[#45ad62]">click</span>
+                        <span class="text-zinc-400 font-semibold"> locator('#projects') </span>
+                    </button>
+                    
+                    <button id="btn-contact" class="action-btn border-b-0">
+                        <span class="time-label">3.1s</span>
+                        <span class="text-blue-400">page.evaluate</span> <span class="text-zinc-400"> getContactInfo() </span>
+                    </button>
+
+                    <div class="mt-4 border-t border-zinc-800 pt-2">
+                        <div class="p-2 px-3 text-zinc-400 uppercase text-[10px] font-bold flex justify-between items-center">
+                            <span>Hidden Specs</span>
+                            <span class="bg-red-500/10 text-red-500 border border-red-500/20 px-1.5 py-0.5 rounded text-[9px] animate-pulse">1 FAILED</span>
+                        </div>
+                        <button id="btn-legacy" class="action-btn hover:bg-red-950/30">
+                            <span class="time-label text-red-500">8.1s</span>
+                            <span class="text-red-500">click</span> <span class="text-zinc-400 font-semibold"> locator('.login-btn') </span>
+                            <span class="ml-auto text-red-500 text-[10px]">❌ timeout</span>
+                        </button>
+                    </div>
+                </nav>
+            </aside>
+
+            <section class="flex-1 bg-[#090909] overflow-hidden flex flex-col">
+                <div class="h-10 border-b border-zinc-800 bg-[#161616] flex items-center px-4 shrink-0 text-zinc-500 gap-4">
+                    <span class="text-white font-bold border-b-2 border-b-blue-500 pb-2.5 mt-1.5">Action</span>
+                    <span class="text-zinc-600 cursor-default select-none">Before</span>
+                    <span class="text-zinc-600 cursor-default select-none">After</span>
+                </div>
+                
+                <div class="flex-1 p-8 overflow-y-auto justify-center items-start flex bg-[#0f0f0f]">
+                    <div id="content-area" aria-live="polite" aria-label="Introduction" class="w-full max-w-4xl bg-[#111] border border-zinc-800 rounded p-10 min-h-[400px] shadow-2xl relative transition-all duration-300">
+                        </div>
+                </div>
+            </section>
+
+            <button id="toggle-detail-panel" class="lg:hidden w-full py-2 bg-[#1a1a1a] border-t border-zinc-800 text-zinc-400 text-xs font-mono text-center hover:bg-[#222] transition-colors">
+                ▼ Detail Panel
+            </button>
+            <aside id="detail-sidebar" class="hidden lg:flex lg:w-[450px] border-l border-zinc-800 bg-[#161616] overflow-hidden flex-col lg:shrink-0">
+                <div class="flex border-b border-zinc-800 h-10 shrink-0 text-center" role="tablist">
+                    <button id="tab-call" class="detail-tab active-tab" role="tab" aria-selected="true">Call</button>
+                    <button id="tab-console" class="detail-tab" role="tab" aria-selected="false">Console</button>
+                    <button id="tab-network" class="detail-tab" role="tab" aria-selected="false">Network</button>
+                    <button id="tab-source" class="detail-tab" role="tab" aria-selected="false">Source</button>
+                </div>
+                
+                <div id="detail-content" role="tabpanel" class="flex-1 p-0 overflow-y-auto font-mono text-[11px]">
+                    </div>
+            </aside>
+
+        </main>
+    </div>
+</Layout>
+
+<script>
+    import { portfolioData } from '../data/portafolioData';
+
+    const contentArea = document.getElementById('content-area');
+    const detailContent = document.getElementById('detail-content');
+    const actionButtons = document.querySelectorAll('.action-btn');
+    const detailTabs = document.querySelectorAll('.detail-tab');
+    
+    // Elementos del header para cambiar el estado a error
+    const topHeader = document.getElementById('top-header');
+    const statusDot = document.getElementById('status-dot');
+    const testName = document.getElementById('test-name');
+
+    // Toggle del panel de detalles en móvil
+    const toggleDetailBtn = document.getElementById('toggle-detail-panel');
+    const detailSidebar = document.getElementById('detail-sidebar');
+    if (toggleDetailBtn && detailSidebar) {
+        toggleDetailBtn.addEventListener('click', () => {
+            const isVisible = detailSidebar.classList.contains('flex');
+            if (isVisible) {
+                detailSidebar.classList.remove('flex');
+                detailSidebar.classList.add('hidden');
+                toggleDetailBtn.textContent = '▼ Detail Panel';
+            } else {
+                detailSidebar.classList.remove('hidden');
+                detailSidebar.classList.add('flex');
+                toggleDetailBtn.textContent = '▲ Detail Panel';
+            }
+        });
+    }
+
+    // Mapa de IDs de botón a nombres de sección para aria-label
+    const sectionNames: Record<string, string> = {
+        'btn-intro': 'Introduction',
+        'btn-exp': 'Experience',
+        'btn-skills': 'Skills',
+        'btn-edu': 'Education',
+        'btn-projects': 'Projects',
+        'btn-contact': 'Contact',
+        'btn-legacy': 'Legacy System',
+    };
+	
+	// 1. Crear el elemento tooltip dinámicamente e integrarlo al body
+    const pwTooltip = document.createElement('div');
+    pwTooltip.className = 'pw-tooltip';
+    document.body.appendChild(pwTooltip);
+
+    if (contentArea) {
+        // Usamos DELEGACIÓN DE EVENTOS en el contenedor padre
+        // 2. Manejar mouseover para mostrar y posicionar el tooltip
+        contentArea.addEventListener('mouseover', (e) => {
+            const target = (e.target as HTMLElement).closest('[data-pw-selector]');
+            if (target && pwTooltip) {
+                const selector = target.getAttribute('data-pw-selector');
+                if (!selector) return;
+
+                // 1. Apagamos la clase visible y CORTAMOS la animación de salida
+                pwTooltip.classList.remove('visible');
+                pwTooltip.classList.add('pw-no-transition');
+
+                // 2. Actualizamos el texto y la nueva posición
+                pwTooltip.textContent = selector;
+                const rect = target.getBoundingClientRect();
+                pwTooltip.style.left = `${rect.left + rect.width / 2}px`;
+                pwTooltip.style.top = `${rect.top - 10}px`;
+
+                // 3. Reflow: El navegador aplica la nueva posición al instante sin animar
+                void pwTooltip.offsetWidth;
+
+                // 4. Devolvemos la capacidad de animarse y lo hacemos visible
+                pwTooltip.classList.remove('pw-no-transition');
+                pwTooltip.classList.add('visible');
+            }
+        });
+
+        // 3. Manejar mouseout para ocultar el tooltip
+        contentArea.addEventListener('mouseout', (e) => {
+            const target = (e.target as HTMLElement).closest('[data-pw-selector]');
+            if (target && pwTooltip) {
+                pwTooltip.classList.remove('visible');
+            }
+        });
+    }
+    let currentActionId = 'btn-intro';
+
+    // Inicializar aria-current en el botón activo inicial
+    const initialBtn = document.getElementById('btn-intro');
+    if (initialBtn) initialBtn.setAttribute('aria-current', 'step');
+
+    actionButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (btn.id === currentActionId) return;
+
+            actionButtons.forEach(b => {
+                b.classList.remove('active-btn');
+                b.removeAttribute('aria-current');
+            });
+            btn.classList.add('active-btn');
+            btn.setAttribute('aria-current', 'step');
+            
+            currentActionId = btn.id;
+            const dataEntry = portfolioData[currentActionId as keyof typeof portfolioData];
+
+            // Actualizar aria-label del área de contenido
+            if (contentArea && sectionNames[currentActionId]) {
+                contentArea.setAttribute('aria-label', sectionNames[currentActionId]);
+            }
+
+            if(contentArea && dataEntry) {
+                // 1. ANIMACIÓN: Desvanecer el contenido actual
+                contentArea.classList.add('fade-out');
+                
+                // 2. Esperar a que termine la transición (150ms) antes de cambiar todo
+                setTimeout(() => {
+                    
+                    // Lógica para el Easter Egg (Test Fallido) - ¡Mantenida intacta!
+                    if (currentActionId === 'btn-legacy') {
+                        if(topHeader) topHeader.classList.add('bg-red-950/40', 'border-red-900');
+                        if(statusDot) { statusDot.innerHTML = '● FAIL'; statusDot.classList.replace('text-[#45ad62]', 'text-red-500'); }
+                        if(testName) testName.innerHTML = 'test: validate-legacy-system.spec.ts:5';
+                        if(contentArea) contentArea.classList.add('border-red-500', 'ring-4', 'ring-red-500/20');
+                    } else {
+                        if(topHeader) topHeader.classList.remove('bg-red-950/40', 'border-red-900');
+                        if(statusDot) { statusDot.innerHTML = '● PASS'; statusDot.classList.replace('text-red-500', 'text-[#45ad62]'); }
+                        if(testName) testName.innerHTML = 'test: hire-sebastian-alatorre.spec.ts:42';
+                        if(contentArea) contentArea.classList.remove('border-red-500', 'ring-4', 'ring-red-500/20');
+                    }
+
+                    // Actualizar el HTML interior
+                    contentArea.innerHTML = dataEntry.dom;
+                    const activeTab = document.querySelector('.active-tab');
+                    updateTabs(activeTab ? activeTab.id : 'tab-call');
+                    
+                    // 3. ANIMACIÓN: Volver a mostrar el contenido nuevo
+                    contentArea.classList.remove('fade-out');
+
+                    // Apply staggered entrance animation to children
+                    contentArea.classList.add('animate-fade-in-up');
+                    const children = contentArea.children;
+                    for (let i = 0; i < children.length; i++) {
+                        const child = children[i] as HTMLElement;
+                        child.classList.add('stagger-child');
+                        child.style.setProperty('--stagger-delay', `${i * 60}ms`);
+                    }
+                    // Clean up animation classes after they complete
+                    setTimeout(() => {
+                        contentArea.classList.remove('animate-fade-in-up');
+                        for (let i = 0; i < children.length; i++) {
+                            const child = children[i] as HTMLElement;
+                            child.classList.remove('stagger-child');
+                            child.style.removeProperty('--stagger-delay');
+                        }
+                    }, 500);
+                    
+                }, 150);
+            }
+        });
+    });
+
+    detailTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Actualizar aria-selected en todas las pestañas
+            detailTabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+            tab.setAttribute('aria-selected', 'true');
+            updateTabs(tab.id);
+        });
+    });
+
+    function updateTabs(tabId: string) {
+        const dataEntry = portfolioData[currentActionId as keyof typeof portfolioData];
+        if(!detailContent || !dataEntry) return;
+
+        detailTabs.forEach(t => {
+            t.classList.remove('active-tab');
+            t.setAttribute('aria-selected', 'false');
+        });
+        const clickedTab = document.getElementById(tabId);
+        if(clickedTab) {
+            clickedTab.classList.add('active-tab');
+            clickedTab.setAttribute('aria-selected', 'true');
+        }
+
+        const paddedContainer = (content: string) => `<div class="p-4 space-y-3">${content}</div>`;
+        const locatorLabel = `<div class="text-zinc-500 uppercase tracking-wider text-[10px] mb-2 font-sans font-bold">Locator</div>`;
+
+        if(tabId === 'tab-call') {
+            const isError = currentActionId === 'btn-legacy';
+            const logStatus = isError ? '' : `<div class="text-zinc-500 mt-4">waiting for element...<br/>resolved to element<br/><span class="text-[#45ad62]">action successful</span></div>`;
+            detailContent.innerHTML = paddedContainer(locatorLabel + dataEntry.call + logStatus);
+        }
+        if(tabId === 'tab-console') {
+            detailContent.innerHTML = paddedContainer(`<div class="text-zinc-500 uppercase tracking-wider text-[10px] mb-2 font-sans font-bold">Browser Console</div>` + dataEntry.console);
+        }
+        if(tabId === 'tab-network') {
+            detailContent.innerHTML = paddedContainer(`<div class="text-zinc-500 uppercase tracking-wider text-[10px] mb-2 font-sans font-bold">Network Requests</div>` + dataEntry.network);
+        }
+        if(tabId === 'tab-source') {
+            detailContent.innerHTML = `<div class="bg-[#111] h-full border-t border-zinc-800">${dataEntry.source}</div>`;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (contentArea) {
+            contentArea.innerHTML = portfolioData['btn-intro'].dom;
+
+            // Apply staggered entrance animation on initial load
+            contentArea.classList.add('animate-fade-in-up');
+            const children = contentArea.children;
+            for (let i = 0; i < children.length; i++) {
+                const child = children[i] as HTMLElement;
+                child.classList.add('stagger-child');
+                child.style.setProperty('--stagger-delay', `${i * 60}ms`);
+            }
+            setTimeout(() => {
+                contentArea.classList.remove('animate-fade-in-up');
+                for (let i = 0; i < children.length; i++) {
+                    const child = children[i] as HTMLElement;
+                    child.classList.remove('stagger-child');
+                    child.style.removeProperty('--stagger-delay');
+                }
+            }, 500);
+        }
+        updateTabs('tab-source'); 
+    });
+</script>
