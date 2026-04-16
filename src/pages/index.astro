@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Timeline from '../components/Timeline.astro';
-// Moví el contenido del Header aquí para poder manipularlo con JS fácilmente
 ---
 
 <Layout title="Playwright Trace Viewer - Sebastian Alatorre">
@@ -115,12 +114,10 @@ import Timeline from '../components/Timeline.astro';
     const actionButtons = document.querySelectorAll('.action-btn');
     const detailTabs = document.querySelectorAll('.detail-tab');
     
-    // Elementos del header para cambiar el estado a error
     const topHeader = document.getElementById('top-header');
     const statusDot = document.getElementById('status-dot');
     const testName = document.getElementById('test-name');
 
-    // Toggle del panel de detalles en móvil
     const toggleDetailBtn = document.getElementById('toggle-detail-panel');
     const detailSidebar = document.getElementById('detail-sidebar');
     if (toggleDetailBtn && detailSidebar) {
@@ -138,7 +135,6 @@ import Timeline from '../components/Timeline.astro';
         });
     }
 
-    // Mapa de IDs de botón a nombres de sección para aria-label
     const sectionNames: Record<string, string> = {
         'btn-intro': 'Introduction',
         'btn-exp': 'Experience',
@@ -149,40 +145,32 @@ import Timeline from '../components/Timeline.astro';
         'btn-legacy': 'Legacy System',
     };
 	
-	// 1. Crear el elemento tooltip dinámicamente e integrarlo al body
-    const pwTooltip = document.createElement('div');
+	const pwTooltip = document.createElement('div');
     pwTooltip.className = 'pw-tooltip';
     document.body.appendChild(pwTooltip);
 
     if (contentArea) {
-        // Usamos DELEGACIÓN DE EVENTOS en el contenedor padre
-        // 2. Manejar mouseover para mostrar y posicionar el tooltip
         contentArea.addEventListener('mouseover', (e) => {
             const target = (e.target as HTMLElement).closest('[data-pw-selector]');
             if (target && pwTooltip) {
                 const selector = target.getAttribute('data-pw-selector');
                 if (!selector) return;
 
-                // 1. Apagamos la clase visible y CORTAMOS la animación de salida
                 pwTooltip.classList.remove('visible');
                 pwTooltip.classList.add('pw-no-transition');
 
-                // 2. Actualizamos el texto y la nueva posición
                 pwTooltip.textContent = selector;
                 const rect = target.getBoundingClientRect();
                 pwTooltip.style.left = `${rect.left + rect.width / 2}px`;
                 pwTooltip.style.top = `${rect.top - 10}px`;
 
-                // 3. Reflow: El navegador aplica la nueva posición al instante sin animar
                 void pwTooltip.offsetWidth;
 
-                // 4. Devolvemos la capacidad de animarse y lo hacemos visible
                 pwTooltip.classList.remove('pw-no-transition');
                 pwTooltip.classList.add('visible');
             }
         });
 
-        // 3. Manejar mouseout para ocultar el tooltip
         contentArea.addEventListener('mouseout', (e) => {
             const target = (e.target as HTMLElement).closest('[data-pw-selector]');
             if (target && pwTooltip) {
@@ -192,7 +180,6 @@ import Timeline from '../components/Timeline.astro';
     }
     let currentActionId = 'btn-intro';
 
-    // Inicializar aria-current en el botón activo inicial
     const initialBtn = document.getElementById('btn-intro');
     if (initialBtn) initialBtn.setAttribute('aria-current', 'step');
 
@@ -210,19 +197,15 @@ import Timeline from '../components/Timeline.astro';
             currentActionId = btn.id;
             const dataEntry = portfolioData[currentActionId as keyof typeof portfolioData];
 
-            // Actualizar aria-label del área de contenido
             if (contentArea && sectionNames[currentActionId]) {
                 contentArea.setAttribute('aria-label', sectionNames[currentActionId]);
             }
 
             if(contentArea && dataEntry) {
-                // 1. ANIMACIÓN: Desvanecer el contenido actual
                 contentArea.classList.add('fade-out');
                 
-                // 2. Esperar a que termine la transición (150ms) antes de cambiar todo
                 setTimeout(() => {
                     
-                    // Lógica para el Easter Egg (Test Fallido) - ¡Mantenida intacta!
                     if (currentActionId === 'btn-legacy') {
                         if(topHeader) topHeader.classList.add('bg-red-950/40', 'border-red-900');
                         if(statusDot) { statusDot.innerHTML = '● FAIL'; statusDot.classList.replace('text-[#45ad62]', 'text-red-500'); }
@@ -235,15 +218,12 @@ import Timeline from '../components/Timeline.astro';
                         if(contentArea) contentArea.classList.remove('border-red-500', 'ring-4', 'ring-red-500/20');
                     }
 
-                    // Actualizar el HTML interior
                     contentArea.innerHTML = dataEntry.dom;
                     const activeTab = document.querySelector('.active-tab');
                     updateTabs(activeTab ? activeTab.id : 'tab-call');
                     
-                    // 3. ANIMACIÓN: Volver a mostrar el contenido nuevo
                     contentArea.classList.remove('fade-out');
 
-                    // Apply staggered entrance animation to children
                     contentArea.classList.add('animate-fade-in-up');
                     const children = contentArea.children;
                     for (let i = 0; i < children.length; i++) {
@@ -251,7 +231,6 @@ import Timeline from '../components/Timeline.astro';
                         child.classList.add('stagger-child');
                         child.style.setProperty('--stagger-delay', `${i * 60}ms`);
                     }
-                    // Clean up animation classes after they complete
                     setTimeout(() => {
                         contentArea.classList.remove('animate-fade-in-up');
                         for (let i = 0; i < children.length; i++) {
@@ -268,7 +247,6 @@ import Timeline from '../components/Timeline.astro';
 
     detailTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // Actualizar aria-selected en todas las pestañas
             detailTabs.forEach(t => t.setAttribute('aria-selected', 'false'));
             tab.setAttribute('aria-selected', 'true');
             updateTabs(tab.id);
@@ -312,7 +290,6 @@ import Timeline from '../components/Timeline.astro';
         if (contentArea) {
             contentArea.innerHTML = portfolioData['btn-intro'].dom;
 
-            // Apply staggered entrance animation on initial load
             contentArea.classList.add('animate-fade-in-up');
             const children = contentArea.children;
             for (let i = 0; i < children.length; i++) {

@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* === Animaciones de entrada === */
-
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -22,8 +20,6 @@
   animation-delay: var(--stagger-delay, 0ms);
 }
 
-/* === Respeto a prefers-reduced-motion === */
-
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in-up,
   .stagger-child {
@@ -36,8 +32,6 @@
     transition: none !important;
   }
 }
-
-/* === Micro-interacciones === */
 
 .skill-badge-hover {
   transition: transform 150ms ease, box-shadow 150ms ease;
@@ -56,8 +50,6 @@
   border-color: rgba(59, 130, 246, 0.5);
   box-shadow: 0 0 8px rgba(59, 130, 246, 0.15);
 }
-
-/* === Focus accesible === */
 
 .focus-ring:focus-visible {
   outline: 2px solid #a78bfa;

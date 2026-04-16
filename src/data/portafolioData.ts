@@ -1,8 +1,5 @@
-// ============================================
-// Utilidades de renderizado
-// ============================================
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-// Función para simular el visor de código fuente de Playwright
 function getSourceCode(activeLine: number, endLine: number = activeLine) {
     const codeLines = [
         /* 1 */ `import { test, expect } from '@playwright/test';`,
@@ -46,10 +43,6 @@ function getSourceCode(activeLine: number, endLine: number = activeLine) {
     return html;
 }
 
-// ============================================
-// Datos del portafolio
-// ============================================
-
 export const portfolioData = {
 'btn-intro': {
         dom: `
@@ -61,7 +54,7 @@ export const portfolioData = {
                 <div class="shrink-0 relative group">
                     <img 
                         data-pw-selector="getByRole('img', { name: 'Sebastian Alatorre Profile' })" 
-                        src="/Profilee.png" 
+                        src="${base}/Profilee.png" 
                         alt="Sebastian Alatorre" 
                         class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-2 border-zinc-700 shadow-2xl transition-all duration-300 group-hover:border-blue-500"
                     />
