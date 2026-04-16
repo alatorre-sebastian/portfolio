@@ -279,7 +279,6 @@ export const portfolioData = {
     'btn-legacy': {
         dom: `
             <div class="flex flex-col items-center justify-center h-full space-y-4">
-                <div class="text-6xl mb-4">🦖</div>
                 <h2 data-pw-selector="getByRole('heading', { name: '500 - Internal Server Error' })" class="text-2xl font-bold text-red-500 font-mono">500 - Internal Server Error</h2>
                 <div data-pw-selector="locator('.error-container')" class="p-6 border border-red-900 bg-red-950/30 rounded w-full max-w-md">
                     <p data-pw-selector="getByText('Legacy Authentication Module failed to load')" class="text-zinc-300 font-mono text-sm mb-4 text-center">Legacy Authentication Module failed to load.</p>
