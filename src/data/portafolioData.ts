@@ -205,28 +205,29 @@ export const portfolioData = {
         network: `<div class="text-[#45ad62]">200 GET /fonts/Inter-Regular.woff2 (from cache)</div>`,
         source: getSourceCode(17, 18)
     },
-    dom: `
-    <div class="flex flex-col items-center justify-center h-full space-y-6">
-        <h2 data-pw-selector="getByRole('heading', { name: 'PROJECTS' })" class="text-2xl font-bold text-white uppercase tracking-widest border-b border-zinc-800 pb-2">Projects</h2>
-        
-        <div data-pw-selector="locator('#projects-card')" id="projects-card" class="playwright-highlight flex flex-col items-center space-y-4 p-8 w-full max-w-md bg-[#161616] border border-zinc-800 rounded shadow-2xl">
-            <div class="text-5xl mb-2">🎭</div>
-            <h3 class="text-white font-bold text-lg">Full Automation Testing Framework</h3>
-            <p class="text-zinc-400 text-sm text-center font-mono">End-to-end, API and performance testing framework. Includes E2E with Playwright & Cypress, UI with Selenium, load testing with k6, and CI/CD pipeline integration.</p>
-            <div class="flex gap-2 flex-wrap justify-center">
-                <span class="text-xs bg-zinc-800 text-green-400 px-2 py-1 rounded font-mono">Playwright</span>
-                <span class="text-xs bg-zinc-800 text-blue-400 px-2 py-1 rounded font-mono">Cypress</span>
-                <span class="text-xs bg-zinc-800 text-orange-400 px-2 py-1 rounded font-mono">Selenium</span>
-                <span class="text-xs bg-zinc-800 text-purple-400 px-2 py-1 rounded font-mono">k6</span>
-                <span class="text-xs bg-zinc-800 text-yellow-400 px-2 py-1 rounded font-mono">CI/CD</span>
+    'btn-projects': {
+        dom: `
+        <div class="flex flex-col items-center justify-center h-full space-y-6">
+            <h2 data-pw-selector="getByRole('heading', { name: 'PROJECTS' })" class="text-2xl font-bold text-white uppercase tracking-widest border-b border-zinc-800 pb-2">Projects</h2>
+            
+            <div data-pw-selector="locator('#projects-card')" id="projects-card" class="playwright-highlight flex flex-col items-center space-y-4 p-8 w-full max-w-md bg-[#161616] border border-zinc-800 rounded shadow-2xl">
+                <div class="text-5xl mb-2">🎭</div>
+                <h3 class="text-white font-bold text-lg">Full Automation Testing Framework</h3>
+                <p class="text-zinc-400 text-sm text-center font-mono">End-to-end, API and performance testing framework. Includes E2E with Playwright & Cypress, UI with Selenium, load testing with k6, and CI/CD pipeline integration.</p>
+                <div class="flex gap-2 flex-wrap justify-center">
+                    <span class="text-xs bg-zinc-800 text-green-400 px-2 py-1 rounded font-mono">Playwright</span>
+                    <span class="text-xs bg-zinc-800 text-blue-400 px-2 py-1 rounded font-mono">Cypress</span>
+                    <span class="text-xs bg-zinc-800 text-orange-400 px-2 py-1 rounded font-mono">Selenium</span>
+                    <span class="text-xs bg-zinc-800 text-purple-400 px-2 py-1 rounded font-mono">k6</span>
+                    <span class="text-xs bg-zinc-800 text-yellow-400 px-2 py-1 rounded font-mono">CI/CD</span>
+                </div>
+                <a href="https://github.com/alatorre-sebastian/qa-automation-portfolio" target="_blank" 
+                   class="mt-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white text-sm rounded border border-zinc-600 font-mono transition-colors">
+                    View on GitHub →
+                </a>
             </div>
-            <a href="https://github.com/alatorre-sebastian/qa-automation-portfolio" target="_blank" 
-               class="mt-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white text-sm rounded border border-zinc-600 font-mono transition-colors">
-                View on GitHub →
-            </a>
         </div>
-    </div>
-    `,
+        `,
     call: `<div class="text-green-400 p-2 rounded border border-zinc-800 bg-black/20 font-mono whitespace-pre">await page.locator('#projects').click();<br/>await expect(page.locator('#projects-card')).toBeVisible();<br/>await page.locator('a[href*="github"]').click();</div>`,
     console: `<div class="text-white">
         <span class="text-blue-400">[INFO]</span> Projects section loaded.<br/>
