@@ -241,13 +241,7 @@ export const portfolioData = {
         GET github.com/alatorre-sebastian/qa-automation-portfolio <span class="text-green-400">200 OK</span><br/>
         GET /actions/workflows/ci.yml <span class="text-green-400">200 OK</span>
     </div>`,
-    source: `<div class="font-mono text-sm text-zinc-400 space-y-1">
-        <span class="text-zinc-600">20</span> <span class="text-blue-400">test</span>(<span class="text-yellow-400">'should display projects section'</span>, <span class="text-blue-400">async</span> ({ page }) => {<br/>
-        <span class="text-zinc-600">21</span> &nbsp;&nbsp;<span class="text-blue-400">await</span> page.locator(<span class="text-yellow-400">'#projects'</span>).click();<br/>
-        <span class="text-zinc-600">22</span> &nbsp;&nbsp;<span class="text-blue-400">await</span> expect(page.locator(<span class="text-yellow-400">'#projects-card'</span>)).toBeVisible();<br/>
-        <span class="text-zinc-600">23</span> &nbsp;&nbsp;<span class="text-blue-400">await</span> page.locator(<span class="text-yellow-400">'a[href*="github"]'</span>).click();<br/>
-        <span class="text-zinc-600">24</span> });
-    </div>`
+    source: getSourceCode(20, 21)
     },
     'btn-contact': {
         dom: `
