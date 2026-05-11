@@ -34,18 +34,18 @@ export interface ParticleState {
 
 const DEFAULT_MAX_PARTICLES = 50;
 const DEFAULT_COLORS = ['#3b82f6', '#22c55e', '#a78bfa'];
-const DEFAULT_MAX_OPACITY = 0.15;
+const DEFAULT_MAX_OPACITY = 0.25;
 const DEFAULT_TARGET_FPS = 30;
 
 function createParticle(width: number, height: number, colors: string[], maxOpacity: number): Particle {
   return {
     x: Math.random() * width,
     y: Math.random() * height,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4,
     radius: Math.random() * 2 + 1,
     color: colors[Math.floor(Math.random() * colors.length)],
-    opacity: Math.random() * maxOpacity,
+    opacity: Math.random() * (maxOpacity - 0.05) + 0.05,
   };
 }
 

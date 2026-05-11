@@ -56,3 +56,61 @@
   margin-left: 2px;
   animation: blink-cursor 1.06s step-end infinite;
 }
+
+/* Status dot pulse — "Open to work" indicator */
+@keyframes status-pulse-glow {
+  0%, 100% { box-shadow: 0 0 4px #45ad62; }
+  50% { box-shadow: 0 0 12px #45ad62, 0 0 24px #45ad6244; }
+}
+
+.status-pulse {
+  animation: status-pulse-glow 2s ease-in-out infinite;
+}
+
+/* Scanline effect — subtle horizontal line that moves down the content area */
+@keyframes scanline-move {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(calc(100vh)); }
+}
+
+.content-scanline {
+  position: relative;
+}
+
+.content-scanline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.15), transparent);
+  animation: scanline-move 8s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Locator resolve effect — green border flash on hover, like Playwright finding an element */
+@keyframes locator-resolve {
+  0% { border-color: rgba(69, 173, 98, 0); box-shadow: none; }
+  30% { border-color: rgba(69, 173, 98, 0.8); box-shadow: 0 0 8px rgba(69, 173, 98, 0.3); }
+  100% { border-color: rgba(69, 173, 98, 0.3); box-shadow: 0 0 4px rgba(69, 173, 98, 0.1); }
+}
+
+.playwright-highlight {
+  transition: border-color 300ms ease, box-shadow 300ms ease;
+}
+
+.playwright-highlight:hover {
+  animation: locator-resolve 0.6s ease-out forwards;
+}
+
+/* Header status glow — subtle pulse on the PASS indicator */
+@keyframes header-glow {
+  0%, 100% { text-shadow: 0 0 4px currentColor; }
+  50% { text-shadow: 0 0 10px currentColor, 0 0 20px rgba(69, 173, 98, 0.3); }
+}
+
+.header-status-glow {
+  animation: header-glow 3s ease-in-out infinite;
+}

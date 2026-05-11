@@ -58,7 +58,7 @@ export const portfolioData = {
                         alt="Sebastian Alatorre" 
                         class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-2 border-zinc-700 shadow-2xl transition-all duration-300 group-hover:border-blue-500"
                     />
-                    <div class="absolute bottom-2 right-2 w-4 h-4 bg-[#45ad62] border-2 border-[#111] rounded-full" title="Open to work"></div>
+                    <div class="absolute bottom-2 right-2 w-4 h-4 bg-[#45ad62] border-2 border-[#111] rounded-full status-pulse" title="Open to work"></div>
                 </div>
 
                 <div class="flex flex-col justify-center">
@@ -71,6 +71,21 @@ export const portfolioData = {
                 <p data-pw-selector="getByText('passionate about building reliable software')">Software Development Engineer in Test with a Computer Science degree and a genuine passion for software quality. I believe every bug caught early is a better experience delivered to the end user, and that drives everything I do.</p>
                 <p data-pw-selector="getByText('Playwright, Cypress, Selenium, and K6')">My core toolkit includes Playwright, Cypress, Selenium, and K6 for performance testing, backed by solid CI/CD pipeline design to keep releases fast and safe across the entire development lifecycle.</p>
                 <p data-pw-selector="getByText('end-to-end test automation strategies')">What sets me apart is a focus on end-to-end test automation strategies that bridge development and quality assurance, turning testing from a bottleneck into a competitive advantage.</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-zinc-800">
+                <div class="text-center">
+                    <div class="text-2xl font-bold font-mono text-blue-400" data-count-target="3" data-count-suffix="+">0+</div>
+                    <div class="text-zinc-500 text-xs mt-1">Years Experience</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold font-mono text-green-400" data-count-target="300" data-count-suffix="+">0+</div>
+                    <div class="text-zinc-500 text-xs mt-1">Tests Automated</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold font-mono text-purple-400" data-count-target="4" data-count-suffix="x">0x</div>
+                    <div class="text-zinc-500 text-xs mt-1">Regression Speed</div>
+                </div>
             </div>
         `,
         call: `<div class="text-blue-400 p-2 rounded border border-zinc-800 bg-black/20 font-mono whitespace-pre">await page.goto('/profile');<br/>await expect(page).toHaveTitle(/Sebastian/);</div>`,
@@ -126,6 +141,36 @@ export const portfolioData = {
                                 <span data-pw-selector="getByText('CYPRESS', { exact: true })" class="skill-badge-hover px-3 py-1.5 bg-[#45ad62]/20 border border-[#45ad62]/60 rounded text-sm text-[#45ad62] font-bold flex items-center gap-1.5"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M11.998.0195c-.8642 0-1.6816.1101-2.1445.1934v.002C4.1731 1.2283 0 6.1368 0 12.0018c0 1.1265.1573 2.2328.4648 3.3028.0387.1453.0915.2993.1368.4473 1.607 4.865 6.2245 8.226 11.3925 8.2285.0651 0 .2518-.0003.502-.0118.8564-.0353 1.6228-.5734 1.9512-1.369l.4736-1.1544L20.4258 8.043H18.621l-2.3164 5.871-2.334-5.871h-1.9082l3.2734 8.0117c-.8115 1.9702-1.6252 3.9395-2.4355 5.9101-.0808.1945-.2655.3284-.4727.336-.144.005-.285.0098-.4316.0098-4.5848 0-8.6672-3.0695-9.9277-7.4649a10.3058 10.3058 0 0 1-.3985-2.8437c0-5.0887 3.6521-9.3404 8.6035-10.164.2214-.037.8885-.1446 1.7246-.1446 4.4166 0 8.269 2.732 9.7305 6.8476.0558.144.0977.293.1465.4395.299.9746.4531 1.9887.4531 3.0215 0 4.5696-2.9413 8.5326-7.3164 9.8613l.4863 1.5996c5.085-1.546 8.4995-6.1518 8.502-11.459 0-1.5491-.2983-2.8706-.6504-3.8926-.0432-.1212-.0873-.2422-.1309-.3633h-.002C21.4577 3.0954 17.0444.0195 11.998.0195ZM8.4336 7.8906c-1.1999 0-2.1747.3852-2.9805 1.1758-.8007.7856-1.205 1.7736-1.205 2.9356 0 1.1544.4068 2.1368 1.205 2.9199.8058.7906 1.7806 1.1738 2.9805 1.1738 1.705 0 3.1556-.955 3.7871-2.4883l.0332-.082-1.6289-.5547c-.168.4563-.7552 1.4883-2.1914 1.4883-.6745 0-1.2437-.2344-1.6934-.6992-.4572-.4699-.6875-1.0632-.6875-1.7578 0-.6998.2253-1.2809.6875-1.7735.4522-.4648 1.019-.7012 1.6934-.7012 1.438 0 2.0238 1.0815 2.1934 1.4883l1.627-.5527-.0333-.084c-.629-1.5358-2.082-2.4883-3.7871-2.4883Z"/></svg>CYPRESS</span>
                                 <span data-pw-selector="getByText('SELENIUM', { exact: true })" class="skill-badge-hover px-3 py-1.5 bg-[#45ad62]/20 border border-[#45ad62]/60 rounded text-sm text-[#45ad62] font-bold flex items-center gap-1.5"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M23.174 3.468l-7.416 8.322a.228.228 0 0 1-.33 0l-3.786-3.9a.228.228 0 0 1 0-.282L12.872 6a.228.228 0 0 1 .366 0l2.106 2.346a.228.228 0 0 0 .342 0l5.94-8.094A.162.162 0 0 0 21.5 0H.716a.174.174 0 0 0-.174.174v23.652A.174.174 0 0 0 .716 24h22.566a.174.174 0 0 0 .174-.174V3.6a.162.162 0 0 0-.282-.132zM6.932 21.366a5.706 5.706 0 0 1-4.05-1.44.222.222 0 0 1 0-.288l.882-1.236a.222.222 0 0 1 .33-.036 4.338 4.338 0 0 0 2.964 1.158c1.158 0 1.722-.534 1.722-1.098 0-1.752-5.7-.552-5.7-4.278 0-1.65 1.428-3 3.756-3a5.568 5.568 0 0 1 3.708 1.242.222.222 0 0 1 0 .3l-.906 1.2a.222.222 0 0 1-.318.036 4.29 4.29 0 0 0-2.706-.936c-.906 0-1.41.402-1.41.996 0 1.572 5.688.522 5.688 4.2.006 1.812-1.284 3.18-3.96 3.18zm12.438-3.432a.192.192 0 0 1-.192.192h-5.202a.06.06 0 0 0-.06.066 1.986 1.986 0 0 0 2.106 1.638 3.264 3.264 0 0 0 1.8-.6.192.192 0 0 1 .276.042l.636.93a.198.198 0 0 1-.042.264 4.71 4.71 0 0 1-2.892.9 3.726 3.726 0 0 1-3.93-3.87 3.744 3.744 0 0 1 3.81-3.852c2.196 0 3.684 1.644 3.684 4.05zm-3.684-2.748a1.758 1.758 0 0 0-1.8 1.56.06.06 0 0 0 .06.066h3.492a.06.06 0 0 0 .06-.066 1.698 1.698 0 0 0-1.812-1.56Z"/></svg>SELENIUM</span>
                                 <span data-pw-selector="getByText('K6', { exact: true })" class="skill-badge-hover px-3 py-1.5 bg-[#45ad62]/20 border border-[#45ad62]/60 rounded text-sm text-[#45ad62] font-bold flex items-center gap-1.5"><svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M24 23.646H0L7.99 6.603l4.813 3.538L19.08.354Zm-8.8-3.681h.052a2.292 2.292 0 0 0 1.593-.64 2.088 2.088 0 0 0 .685-1.576 1.912 1.912 0 0 0-.66-1.511 2.008 2.008 0 0 0-1.37-.59h-.04a.716.716 0 0 0-.199.027l1.267-1.883-1.01-.705-.477.705-1.22 1.864c-.21.31-.386.582-.495.77-.112.2-.21.41-.29.625a1.942 1.942 0 0 0-.138.719 2.086 2.086 0 0 0 .676 1.558c.422.411.989.641 1.578.64Zm-5.365-2.027 1.398 1.978h1.496l-1.645-2.295 1.46-2.029-.97-.671-.427.565-1.314 1.853v-3.725l-1.31-1.068v7.37h1.31v-1.98Zm5.367.792a.963.963 0 1 1 0-1.927h.009a.941.941 0 0 1 .679.29.897.897 0 0 1 .29.668.978.978 0 0 1-.977.967Z"/></svg>K6</span>
+                            </div>
+                            <div class="mt-3 space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-zinc-500 w-20 font-mono">Playwright</span>
+                                    <div class="flex-1 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                        <div class="h-full rounded-full bg-[#45ad62] skill-progress" data-progress="90" style="width: 0%"></div>
+                                    </div>
+                                    <span class="text-[10px] text-zinc-500 font-mono">90%</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-zinc-500 w-20 font-mono">Cypress</span>
+                                    <div class="flex-1 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                        <div class="h-full rounded-full bg-[#38bdf8] skill-progress" data-progress="85" style="width: 0%"></div>
+                                    </div>
+                                    <span class="text-[10px] text-zinc-500 font-mono">85%</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-zinc-500 w-20 font-mono">Selenium</span>
+                                    <div class="flex-1 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                        <div class="h-full rounded-full bg-[#fbbf24] skill-progress" data-progress="80" style="width: 0%"></div>
+                                    </div>
+                                    <span class="text-[10px] text-zinc-500 font-mono">80%</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] text-zinc-500 w-20 font-mono">K6</span>
+                                    <div class="flex-1 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                                        <div class="h-full rounded-full bg-[#a78bfa] skill-progress" data-progress="75" style="width: 0%"></div>
+                                    </div>
+                                    <span class="text-[10px] text-zinc-500 font-mono">75%</span>
+                                </div>
                             </div>
                         </div>
 

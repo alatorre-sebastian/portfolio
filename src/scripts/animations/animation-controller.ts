@@ -19,6 +19,9 @@ import {
   pulseTimelineDot,
   initTimelineShimmer,
 } from './timeline-animations';
+import { initTypewriterRotate } from './typewriter-rotate';
+import { initCounterAnimations } from './counter-animate';
+import { initProgressBars } from './progress-bars';
 
 /**
  * Color mapping per section for dynamic border gradients and glows.
@@ -50,6 +53,12 @@ const DEFAULT_TYPING_CONFIG: TypingConfig = {
   cursorLingerTime: 2000,
 };
 
+const TYPEWRITER_PHRASES = [
+  'QA Engineer · SDET',
+  'Playwright · Cypress · Selenium · K6',
+  'CI/CD Pipeline Design',
+];
+
 export interface AnimationController {
   init(): void;
   onSectionChange(sectionId: string, newContent: string): Promise<void>;
@@ -66,6 +75,7 @@ export function createAnimationController(): AnimationController {
   let timelineBar: HTMLElement | null = null;
   let timelineDots: HTMLElement[] = [];
   let typingInitialized = false;
+  let typewriterDestroy: (() => void) | null = null;
 
   function init(): void {
     // Get DOM references
@@ -105,6 +115,11 @@ export function createAnimationController(): AnimationController {
       runTypingEffect();
     }
 
+    // Init counter animations for intro section
+    if (contentArea) {
+      initCounterAnimations(contentArea);
+    }
+
     // Set initial section color
     updateSectionColor('btn-intro');
   }
@@ -114,14 +129,22 @@ export function createAnimationController(): AnimationController {
 
     // Look for the typing target element in the intro section
     const typingTarget = contentArea.querySelector(
-      '[data-typing-target], .typing-target'
+      '.candidate-role, [data-typing-target]'
     ) as HTMLElement | null;
 
     if (typingTarget) {
-      const text = typingTarget.textContent || '';
+      // Clean up previous typewriter instance if any
+      if (typewriterDestroy) {
+        typewriterDestroy();
+        typewriterDestroy = null;
+      }
+
+      // Clear existing text content for the typewriter to take over
       typingTarget.textContent = '';
       typingInitialized = true;
-      typeText(typingTarget, text, DEFAULT_TYPING_CONFIG);
+
+      const instance = initTypewriterRotate(typingTarget, TYPEWRITER_PHRASES);
+      typewriterDestroy = instance.destroy;
     }
   }
 
@@ -163,15 +186,26 @@ export function createAnimationController(): AnimationController {
     return transitionContent(contentArea, newContent, DEFAULT_TRANSITION_CONFIG).then(() => {
       // After transition completes, init section-specific interactions
 
-      // Skill badge interactions — only in skills section
+      // Skill badge interactions and progress bars — only in skills section
       if (sectionId === 'btn-skills' && contentArea) {
         initSkillBadgeInteractions(contentArea);
+        initProgressBars(contentArea);
       }
 
-      // Profile photo and typing effect — only in intro section
+      // Profile photo, typing effect, and counters — only in intro section
       if (sectionId === 'btn-intro') {
         initProfilePhoto();
         runTypingEffect();
+        if (contentArea) {
+          initCounterAnimations(contentArea);
+        }
+      }
+
+      // Destroy typewriter when leaving intro
+      if (sectionId !== 'btn-intro' && typewriterDestroy) {
+        typewriterDestroy();
+        typewriterDestroy = null;
+        typingInitialized = false;
       }
     });
   }
@@ -180,6 +214,11 @@ export function createAnimationController(): AnimationController {
     if (particleEngine) {
       particleEngine.destroy();
       particleEngine = null;
+    }
+
+    if (typewriterDestroy) {
+      typewriterDestroy();
+      typewriterDestroy = null;
     }
 
     contentArea = null;

@@ -43,9 +43,15 @@ export async function transitionContent(
     currentAnimation = null;
   }
 
+  // Preserve any canvas elements (e.g., particle engine) that should persist across transitions
+  const persistentElements = Array.from(
+    container.querySelectorAll('canvas[aria-hidden="true"]')
+  );
+
   // If reduced motion is preferred, replace content immediately
   if (!shouldAnimate()) {
     container.innerHTML = newContent;
+    persistentElements.forEach(el => container.insertBefore(el, container.firstChild));
     return;
   }
 
@@ -64,8 +70,9 @@ export async function transitionContent(
     // Animation was cancelled (rapid click) — proceed with content swap
   }
 
-  // Replace content after exit completes
+  // Replace content after exit completes, preserving persistent elements
   container.innerHTML = newContent;
+  persistentElements.forEach(el => container.insertBefore(el, container.firstChild));
 
   // Entry animation: fade in + scale up + translate from offset
   const enterControls = animate(
