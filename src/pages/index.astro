@@ -20,7 +20,7 @@ import Timeline from '../components/Timeline.astro';
 
         <main class="flex flex-col lg:flex-row flex-1 overflow-hidden lg:overflow-hidden overflow-y-auto">
             
-            <aside role="navigation" aria-label="Test Steps" class="lg:w-80 border-r border-zinc-800 bg-[#161616] lg:overflow-y-auto shrink-0 flex lg:flex-col flex-row overflow-x-auto lg:overflow-x-hidden whitespace-nowrap lg:whitespace-normal">
+            <aside role="navigation" aria-label="Test Steps" class="sidebar-depth lg:w-80 border-r border-zinc-800 bg-[#161616] lg:overflow-y-auto shrink-0 flex lg:flex-col flex-row overflow-x-auto lg:overflow-x-hidden whitespace-nowrap lg:whitespace-normal">
                 <div class="flex border-b border-zinc-800">
                     <button class="flex-1 px-4 py-2 border-b-2 border-b-blue-500 text-white font-bold text-center">Actions</button>
                     <span class="flex-1 px-4 py-2 text-zinc-600 text-center cursor-default select-none">Metadata</span>
@@ -82,7 +82,7 @@ import Timeline from '../components/Timeline.astro';
                 </div>
                 
                 <div class="flex-1 p-8 overflow-y-auto justify-center items-start flex bg-[#0f0f0f]">
-                    <div id="content-area" aria-live="polite" aria-label="Introduction" class="w-full max-w-4xl bg-[#111] border border-zinc-800 rounded p-10 min-h-[400px] shadow-2xl relative transition-all duration-300">
+                    <div id="content-area" aria-live="polite" aria-label="Introduction" class="content-border-gradient w-full max-w-4xl bg-[#111] border border-zinc-800 rounded p-10 min-h-[400px] shadow-2xl relative transition-all duration-300">
                         </div>
                 </div>
             </section>
@@ -108,6 +108,7 @@ import Timeline from '../components/Timeline.astro';
 
 <script>
     import { portfolioData } from '../data/portafolioData';
+    import { createAnimationController } from '../scripts/animations/animation-controller';
 
     const contentArea = document.getElementById('content-area');
     const detailContent = document.getElementById('detail-content');
@@ -178,6 +179,10 @@ import Timeline from '../components/Timeline.astro';
             }
         });
     }
+
+    // Create the animation controller instance
+    const controller = createAnimationController();
+
     let currentActionId = 'btn-intro';
 
     const initialBtn = document.getElementById('btn-intro');
@@ -202,45 +207,25 @@ import Timeline from '../components/Timeline.astro';
             }
 
             if(contentArea && dataEntry) {
-                contentArea.classList.add('fade-out');
-                
-                setTimeout(() => {
-                    
-                    if (currentActionId === 'btn-legacy') {
-                        if(topHeader) topHeader.classList.add('bg-red-950/40', 'border-red-900');
-                        if(statusDot) { statusDot.innerHTML = '● FAIL'; statusDot.classList.replace('text-[#45ad62]', 'text-red-500'); }
-                        if(testName) testName.innerHTML = 'test: validate-legacy-system.spec.ts:5';
-                        if(contentArea) contentArea.classList.add('border-red-500', 'ring-4', 'ring-red-500/20');
-                    } else {
-                        if(topHeader) topHeader.classList.remove('bg-red-950/40', 'border-red-900');
-                        if(statusDot) { statusDot.innerHTML = '● PASS'; statusDot.classList.replace('text-red-500', 'text-[#45ad62]'); }
-                        if(testName) testName.innerHTML = 'test: hire-sebastian-alatorre.spec.ts:42';
-                        if(contentArea) contentArea.classList.remove('border-red-500', 'ring-4', 'ring-red-500/20');
-                    }
+                // Handle legacy button header color changes
+                if (currentActionId === 'btn-legacy') {
+                    if(topHeader) topHeader.classList.add('bg-red-950/40', 'border-red-900');
+                    if(statusDot) { statusDot.innerHTML = '● FAIL'; statusDot.classList.replace('text-[#45ad62]', 'text-red-500'); }
+                    if(testName) testName.innerHTML = 'test: validate-legacy-system.spec.ts:5';
+                    if(contentArea) contentArea.classList.add('border-red-500', 'ring-4', 'ring-red-500/20');
+                } else {
+                    if(topHeader) topHeader.classList.remove('bg-red-950/40', 'border-red-900');
+                    if(statusDot) { statusDot.innerHTML = '● PASS'; statusDot.classList.replace('text-red-500', 'text-[#45ad62]'); }
+                    if(testName) testName.innerHTML = 'test: hire-sebastian-alatorre.spec.ts:42';
+                    if(contentArea) contentArea.classList.remove('border-red-500', 'ring-4', 'ring-red-500/20');
+                }
 
-                    contentArea.innerHTML = dataEntry.dom;
+                // Delegate transition to the animation controller
+                controller.onSectionChange(btn.id, dataEntry.dom).then(() => {
+                    // Update tabs after transition completes
                     const activeTab = document.querySelector('.active-tab');
                     updateTabs(activeTab ? activeTab.id : 'tab-call');
-                    
-                    contentArea.classList.remove('fade-out');
-
-                    contentArea.classList.add('animate-fade-in-up');
-                    const children = contentArea.children;
-                    for (let i = 0; i < children.length; i++) {
-                        const child = children[i] as HTMLElement;
-                        child.classList.add('stagger-child');
-                        child.style.setProperty('--stagger-delay', `${i * 60}ms`);
-                    }
-                    setTimeout(() => {
-                        contentArea.classList.remove('animate-fade-in-up');
-                        for (let i = 0; i < children.length; i++) {
-                            const child = children[i] as HTMLElement;
-                            child.classList.remove('stagger-child');
-                            child.style.removeProperty('--stagger-delay');
-                        }
-                    }, 500);
-                    
-                }, 150);
+                });
             }
         });
     });
@@ -287,25 +272,21 @@ import Timeline from '../components/Timeline.astro';
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+        // Set initial content
         if (contentArea) {
             contentArea.innerHTML = portfolioData['btn-intro'].dom;
-
-            contentArea.classList.add('animate-fade-in-up');
-            const children = contentArea.children;
-            for (let i = 0; i < children.length; i++) {
-                const child = children[i] as HTMLElement;
-                child.classList.add('stagger-child');
-                child.style.setProperty('--stagger-delay', `${i * 60}ms`);
-            }
-            setTimeout(() => {
-                contentArea.classList.remove('animate-fade-in-up');
-                for (let i = 0; i < children.length; i++) {
-                    const child = children[i] as HTMLElement;
-                    child.classList.remove('stagger-child');
-                    child.style.removeProperty('--stagger-delay');
-                }
-            }, 500);
         }
+
+        // Initialize the animation controller (handles typing effect, particles, etc.)
+        controller.init();
+
+        // Apply glass-card class to card-hover elements dynamically
+        if (contentArea) {
+            contentArea.querySelectorAll('.card-hover').forEach(card => {
+                card.classList.add('glass-card');
+            });
+        }
+
         updateTabs('tab-source'); 
     });
 </script>

@@ -1,3 +1,5 @@
+@import './glassmorphism.css';
+@import './animations.css';
 @import "tailwindcss";
 
 @keyframes fade-in-up {
@@ -28,8 +30,20 @@
 
   .skill-badge-hover,
   .card-hover,
-  .action-btn {
+  .action-btn,
+  .glass-card {
     transition: none !important;
+  }
+
+  .glass-card:hover {
+    transform: none !important;
+  }
+
+  .active-indicator,
+  .timeline-shimmer::after,
+  .typing-cursor,
+  .profile-ring {
+    animation: none !important;
   }
 }
 

@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Glassmorphism & Depth Effects
+   Requisitos: 3.1, 3.2, 3.3, 3.4, 10.1
+   ========================================================================== */
+
+/* Efecto glassmorphism en tarjetas */
+.glass-card {
+  background: rgba(22, 22, 22, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(63, 63, 70, 0.5);
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+
+/* Elevación en hover */
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3),
+              0 0 15px var(--section-glow, rgba(59, 130, 246, 0.1));
+}
+
+/* Borde con gradiente dinámico por sección */
+.content-border-gradient {
+  border-image: linear-gradient(
+    to bottom,
+    var(--section-color, #3b82f6) 0%,
+    transparent 100%
+  ) 1;
+}
+
+/* Sombra interna del sidebar */
+.sidebar-depth {
+  box-shadow: inset -4px 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Profile Ring — Rotating Conic Gradient
+   Requisito: 10.1
+   ========================================================================== */
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-gradient {
+  from { --angle: 0deg; }
+  to { --angle: 360deg; }
+}
+
+.profile-ring {
+  background: conic-gradient(
+    from var(--angle),
+    #3b82f6, #a78bfa, #22c55e, #3b82f6
+  );
+  animation: rotate-gradient 3s linear infinite;
+  padding: 3px;
+  border-radius: 50%;
+}
+
+/* ==========================================================================
+   Fallback for browsers without @property support
+   Uses a standard rotating animation on the entire element instead
+   ========================================================================== */
+
+@supports not (background: conic-gradient(from var(--angle), red, blue)) {
+  .profile-ring {
+    background: conic-gradient(
+      from 0deg,
+      #3b82f6, #a78bfa, #22c55e, #3b82f6
+    );
+    animation: rotate-ring-fallback 3s linear infinite;
+  }
+
+  @keyframes rotate-ring-fallback {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+}

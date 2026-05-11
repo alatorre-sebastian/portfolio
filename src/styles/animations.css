@@ -1,0 +1,58 @@
+/* Barra lateral activa con brillo pulsante */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.active-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #3b82f6;
+  box-shadow: 0 0 6px #3b82f6;
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Shimmer en timeline */
+@keyframes timeline-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.timeline-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  animation: timeline-shimmer 4s ease-in-out infinite;
+}
+
+/* Cursor de typing */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background: currentColor;
+  margin-left: 2px;
+  animation: blink-cursor 1.06s step-end infinite;
+}
